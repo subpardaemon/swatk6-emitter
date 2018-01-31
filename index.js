@@ -126,7 +126,7 @@ swatk6_emitter.prototype._setup = function() {
  * @returns {swatk6_emitter}
  */
 swatk6_emitter.prototype.on = function(eventName,callbackFunc) {
-    return this.addEventListener(eventName,callbackFunc,false,false);
+    return this.addListener(eventName,callbackFunc,false,false);
 };
 /**
  * Prepend an event listener.
@@ -135,7 +135,7 @@ swatk6_emitter.prototype.on = function(eventName,callbackFunc) {
  * @returns {swatk6_emitter}
  */
 swatk6_emitter.prototype.prependListener = function(eventName,callbackFunc) {
-    return this.addEventListener(eventName,callbackFunc,false,true);
+    return this.addListener(eventName,callbackFunc,false,true);
 };
 /**
  * Add an event listener that activates only once.
@@ -144,7 +144,7 @@ swatk6_emitter.prototype.prependListener = function(eventName,callbackFunc) {
  * @returns {swatk6_emitter}
  */
 swatk6_emitter.prototype.once = function(eventName,callbackFunc) {
-    return this.addEventListener(eventName,callbackFunc,true,false);
+    return this.addListener(eventName,callbackFunc,true,false);
 };
 /**
  * Prepend an event listener that activates only once.
@@ -153,7 +153,7 @@ swatk6_emitter.prototype.once = function(eventName,callbackFunc) {
  * @returns {swatk6_emitter}
  */
 swatk6_emitter.prototype.prependOnceListener = function(eventName,callbackFunc) {
-    return this.addEventListener(eventName,callbackFunc,true,true);
+    return this.addListener(eventName,callbackFunc,true,true);
 };
 /**
  * Add a normal or a one-time-only event listener.
