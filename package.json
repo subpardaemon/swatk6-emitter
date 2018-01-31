@@ -1,10 +1,10 @@
 {
-  "name": "swatk6-emitter",
-  "version": "1.0.1",
+  "name": "@swatk6/emitter",
+  "version": "1.0.2",
   "description": "A drop-in replacement for EventEmitter that can handle DOM-style events whose propagation can be stopped.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test.js"
   },
   "repository": {
     "type": "git",
@@ -14,7 +14,8 @@
   "keywords": [
     "event",
     "emitter",
-    "stoppropagation"
+    "stoppropagation",
+    "cancelable"
   ],
   "author": "Andras Kemeny <subpardaemon@gmail.com>",
   "license": "MIT",

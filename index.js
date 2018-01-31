@@ -105,8 +105,8 @@ swatk6_event.prototype.canPropagate = function() {
  * @returns {swatk6_emitter}
  */
 function swatk6_emitter() {
-    this.listeners = {};
-    this.listenersOnce = {};
+    this._listeners = {};
+    this._listenersOnce = {};
 }
 swatk6_emitter.defaultMaxListeners = 0;
 /**
@@ -114,9 +114,9 @@ swatk6_emitter.defaultMaxListeners = 0;
  * @inner
  */
 swatk6_emitter.prototype._setup = function() {
-    if (typeof this.listeners==='undefined') {
-	this.listeners = {};
-	this.listenersOnce = {};
+    if (typeof this._listeners==='undefined') {
+	this._listeners = {};
+	this._listenersOnce = {};
     }
 };
 /**
@@ -171,7 +171,7 @@ swatk6_emitter.prototype.addListener = function(eventName,callbackFunc,once,prep
     if (typeof prepend==='undefined') {
 	prepend = false;
     }
-    var o = (once===true) ? this.listenersOnce : this.listeners;
+    var o = (once===true) ? this._listenersOnce : this._listeners;
     if (typeof o[eventName]==='undefined') {
 	o[eventName] = [];
     }
@@ -191,15 +191,15 @@ swatk6_emitter.prototype.off = function(eventName,callbackFunc) {
 	callbackFunc = null;
     }
     if (callbackFunc===null) {
-	this.listeners[eventName] = [];
-	this.listenersOnce[eventName] = [];
+	this._listeners[eventName] = [];
+	this._listenersOnce[eventName] = [];
     }
     else {
-	if (this.listeners[eventName].indexOf(callbackFunc)>=0) {
-	    this.listeners[eventName].splice(this.listeners[eventName].indexOf(callbackFunc),1);
+	if (this._listeners[eventName].indexOf(callbackFunc)>=0) {
+	    this._listeners[eventName].splice(this.listeners[eventName].indexOf(callbackFunc),1);
 	}
 	else if (this.listenersOnce[eventName].indexOf(callbackFunc)>=0) {
-	    this.listenersOnce[eventName].splice(this.listenersOnce[eventName].indexOf(callbackFunc),1);
+	    this._listenersOnce[eventName].splice(this.listenersOnce[eventName].indexOf(callbackFunc),1);
 	}
     }
     return this;
@@ -213,8 +213,8 @@ swatk6_emitter.prototype.removeAllListeners = function(eventName) {
     if (typeof eventName!=='undefined') {
 	return this.off(eventName);
     }
-    this.listeners = {};
-    this.listenersOnce = {};
+    this._listeners = {};
+    this._listenersOnce = {};
     return this;
 };
 /**
@@ -252,7 +252,7 @@ swatk6_emitter.prototype.emit = function(eventObject) {
 	throw e;
     }
     var calls = this.listeners(evType);
-    this.listenersOnce[evType] = {};
+    this._listenersOnce[evType] = {};
     if (calls.length===0) {
 	return false;
     }
@@ -273,10 +273,13 @@ swatk6_emitter.prototype.emit = function(eventObject) {
  * @returns {Array}
  */
 swatk6_emitter.prototype.eventNames = function() {
-    var n = Object.keys(this.listeners);
-    var x = Object.keys(this.listenersOnce);
+    this._setup();
+    var n = Object.keys(this._listeners);
+    var x = Object.keys(this._listenersOnce);
     for(var i=0;i<x.length;i++) {
-	n.push(x[i]);
+	if (n.indexOf(x[i])>-1) {
+	    n.push(x[i]);
+	}
     }
     return n;
 };
@@ -301,8 +304,9 @@ swatk6_emitter.prototype.setMaxListeners = function(n) {
  * @returns {Number}
  */
 swatk6_emitter.prototype.listenerCount = function(eventName) {
-    var c = (typeof this.listeners[eventName]!=='undefined') ? this.listeners[eventName].length : 0;
-    c += (typeof this.listenersOnce[eventName]!=='undefined') ? this.listenersOnce[eventName].length : 0;
+    this._setup();
+    var c = (typeof this._listeners[eventName]!=='undefined') ? this._listeners[eventName].length : 0;
+    c += (typeof this._listenersOnce[eventName]!=='undefined') ? this._listenersOnce[eventName].length : 0;
     return c;
 };
 /**
@@ -311,15 +315,16 @@ swatk6_emitter.prototype.listenerCount = function(eventName) {
  * @returns {Array}
  */
 swatk6_emitter.prototype.listeners = function(eventName) {
+    this._setup();
     var a = [], i;
-    if (typeof this.listeners[eventName]!=='undefined') {
-	for(i=0;i<this.listeners[eventName].length;i++) {
-	    a.push(this.listeners[eventName][i]);
+    if (typeof this._listeners[eventName]!=='undefined') {
+	for(i=0;i<this._listeners[eventName].length;i++) {
+	    a.push(this._listeners[eventName][i]);
 	}
     }
-    if (typeof this.listenersOnce[eventName]!=='undefined') {
-	for(i=0;i<this.listenersOnce[eventName].length;i++) {
-	    a.push(this.listenersOnce[eventName][i]);
+    if (typeof this._listenersOnce[eventName]!=='undefined') {
+	for(i=0;i<this._listenersOnce[eventName].length;i++) {
+	    a.push(this._listenersOnce[eventName][i]);
 	}
     }
     return a;
