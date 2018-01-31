@@ -14,7 +14,7 @@ This class provides a drop-in replacement functionality for Node's official `Eve
 - Neither does it optimize for single or multiple arguments; the algorithm I used for extracting arguments is one that avoids that famed V8 slowdown bug.*
 - It supports an object-based (`.event`) event approach that allows for payload and result distribution among listeners (allowing the use of events for dynamically configurable filters and data modifiers) and cancelable events (that stop any subsequent listeners to be called).
 
-* *: if you experience significant slowdowns because of these optimization omissions, let me know in an issue and I'll reintroduce them to the codeline. *
+*: If you experience significant slowdowns because of these optimization omissions, let me know in an issue and I'll reintroduce them to the codeline.
 
 The only noticable signature difference is in `.emitter.emit()`, as it, beside the original signature, also supports the new signature for the `.event` objects:
 
@@ -24,6 +24,7 @@ The only noticable signature difference is in `.emitter.emit()`, as it, beside t
 
 This class can be used on its own as a basis for a generic event object, or it can be extended to suit your needs.
 
+### Methods
 `new event(eventName[,payload[,origin]])`
 - eventName `<String>`: the event's name (or type, YMMV)
 - payload `<any>`: the event's payload, optional, defaults to `null`
@@ -32,22 +33,32 @@ This class can be used on its own as a basis for a generic event object, or it c
 Creates a new event object (constructor).
 
 `event.canPropagate()`
-- returns `<Boolean>` true if the event is not canceled and can move on to the next listner, if there is one
+- returns `<Boolean>` 
+
+Returns `true` if the event is not canceled and can move on to the next listner, if there is one; `false` otherwise.
 
 `event.stopPropagation()`
 `event.stopImmediatePropagation()`
 `event.cancelEvent()`
-- returns the event object itself, and
-- cancels the current event, so it won't get to any subsequent listeners
+- returns the event object itself, allowing for chaining
+
+These cancel the current event, so it won't get to any subsequent listeners. They all do the same, the aliases are there for convenience.
 
 `event.getPayload()`
 `event.setPayload(newValue)`
 `event.getResult()`
 `event.setResult(newValue)`
-- accessor methods for the event's built-in payload and result containers,
-- the set* methods return the event object itself,
-- newValue can be any type.
+- **newvValue** `<any>`
+- **set\*** methods return the event object itself, allowing for chaining
 
-`event.type`: type `<String>` and contains the event name/type
+Accessor methods for the event's built-in payload and result containers.
 
-`event.target`: the event's origin function or object, as set by the third argument of the constructor, defaults to `null`
+### Properties
+
+`event.type`: `<String>`
+
+Contains the event name/type.
+
+`event.target`: `<Function|Object>`
+
+The event's origin function or object, as set by the third argument of the constructor, defaults to `null`.
