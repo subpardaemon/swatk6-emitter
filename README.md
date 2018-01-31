@@ -1,10 +1,29 @@
-# swatk6-emitter
+# @swatk6/emitter
 
 A drop-in replacement for EventEmitter that can handle DOM-style events whose propagation can be stopped.
 
 This module exports two classes: `.emitter` and `.event`. The `.emitter` can be used as a basis for `extend`ing your own class, and the `.event` class can be used by itself or be extended to serve your needs for an in-transit cancelable event.
 
-## `emitter`
+## Usage
+
+`npm install --save @swatk6/emitter`
+
+```javascript
+const myemitter = require('@swatk6/emitter').emitter;
+const myevent = require('@swatk6/emitter').event;
+
+class MyEmitterClass extends myemitter {
+  constructor() {
+    super();
+  }
+}
+```
+
+For a detailed example, see test.js in this package.
+
+## Reference
+
+### `emitter`
 
 This class provides a drop-in replacement functionality for Node's official `EventEmitter` class. It's API-compatible for the most part, but it has a few subtle differences.
 
@@ -20,11 +39,11 @@ The only noticable signature difference is in `.emitter.emit()`, as it, beside t
 
 `.emitter.emit(<EventObject>)` : in this case, <EventObject> would be an `.event` object or one that extends it.
 
-## `event`
+### `event`
 
 This class can be used on its own as a basis for a generic event object, or it can be extended to suit your needs.
 
-### Methods
+#### Methods
 `new event(eventName[,payload[,origin]])`
 - eventName `<String>`: the event's name (or type, YMMV)
 - payload `<any>`: the event's payload, optional, defaults to `null`
@@ -53,7 +72,7 @@ These cancel the current event, so it won't get to any subsequent listeners. The
 
 Accessor methods for the event's built-in payload and result containers.
 
-### Properties
+#### Properties
 
 `event.type`: `<String>`
 
