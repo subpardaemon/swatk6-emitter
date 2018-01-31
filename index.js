@@ -80,6 +80,13 @@ swatk6_event.prototype.stopImmediatePropagation = function() {
     return this.stopPropagation();
 };
 /**
+ * Alias to stopPropagation().
+ * @returns {swatk6_event}
+ */
+swatk6_event.prototype.cancelEvent = function() {
+    return this.stopPropagation();
+};
+/**
  * True if the event can propagate (event listneres can be called).
  * @returns {Boolean}
  */
