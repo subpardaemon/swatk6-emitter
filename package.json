@@ -1,5 +1,5 @@
 {
-  "name": "@swatk6/emitter",
+  "name": "swatk6-emitter",
   "version": "1.0.0",
   "description": "A drop-in replacement for EventEmitter that can handle DOM-style events whose propagation can be stopped.",
   "main": "index.js",
