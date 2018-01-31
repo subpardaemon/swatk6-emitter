@@ -1,6 +1,6 @@
 {
   "name": "swatk6-emitter",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A drop-in replacement for EventEmitter that can handle DOM-style events whose propagation can be stopped.",
   "main": "index.js",
   "scripts": {
