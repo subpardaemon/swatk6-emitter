@@ -1,7 +1,7 @@
 {
   "name": "@swatk6/emitter",
-  "version": "1.0.2",
-  "description": "A drop-in replacement for EventEmitter that can handle DOM-style events whose propagation can be stopped.",
+  "version": "1.1.0",
+  "description": "A drop-in replacement for EventEmitter that can work with cancelable event objects, and a base Emitter class that implements a parent/child architecture and event tree traversal.",
   "main": "index.js",
   "scripts": {
     "test": "node test.js"
@@ -15,11 +15,15 @@
     "event",
     "emitter",
     "stoppropagation",
-    "cancelable"
+    "cancelable",
+    ""
   ],
   "author": "Andras Kemeny <subpardaemon@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/subpardaemon/swatk6-emitter/issues"
+  },
+  "devDependencies": {
+    "@swatk6/tester": "^1.1.0"
   }
 }
